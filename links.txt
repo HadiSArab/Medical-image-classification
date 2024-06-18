@@ -1,0 +1,7 @@
+https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html
+
+https://medium.com/@vignesh.g1609/image-segmentation-using-otsu-threshold-selection-method-856ccdacf22
+
+https://hbyacademic.medium.com/mathematical-secrets-behind-image-binarization-otsu-thresholding-25edf8d7cb60
+
+https://en.wikipedia.org/wiki/Otsu%27s_method
