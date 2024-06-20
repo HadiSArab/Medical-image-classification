@@ -1,48 +1,24 @@
+import cv2 as cv
+import glob
 
-import numpy as np
-from PIL import Image
-# import required module
-from pathlib import Path
-
-def threshold_image (im, th):
-   thresholded_im = np.zeros(im.shape)
-   thresholded_im[im >= th] = 1
-   return thresholded_im
-
-def compute_otsu_criteria(im, th):
-   thresholded_im = threshold_image(im, th)
-   nb_pixels = im.size
-   nb_pixels1 = np.count_nonzero(thresholded_im)
-   weight1 = nb_pixels1 / nb_pixels
-   weight0 = 1-weight1
-   if weight1 == 0 or weight0 == 0:
-      return np.inf
+Directories = ["Mild Dementia","Moderate Dementia","Non Demented","Very mild Dementia"]
+for Dname in Directories:
    
-   val_pixels1 = im[thresholded_im == 1]
-   val_pixels0 = im[thresholded_im == 0]
-   var0 = np.var(val_pixels0) if len(val_pixels0) > 0 else 0
-   var1 = np.var(val_pixels1) if len(val_pixels1) > 0 else 0
-   return weight0 * var0 + weight1 * var1
+   # Find all JPG files in the current directory
+   images = glob.glob(f"F:\\tech\GitHub\Data\{Dname}\*.jpg")
+   print("\n\n\n\n\n\n\n\n\n Directory : ",Dname)
 
+   for image in images:
+      img = cv.imread(image, cv.IMREAD_GRAYSCALE)
+      assert img is not None, "file could not be read, check with os.path.exists()"
+      new_width = 196
+      new_height = 196
+      img = cv.resize(img, (new_width, new_height))
+      img = cv.medianBlur(img,5)
+      
+      th = cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,\
+      cv.THRESH_BINARY,11,2)
+      name = image.split("\\")[-1]
+      # print(name)
 
-def find_best_threshold(im):
-   threshold_range = range(np.max(im)+1)
-   criterias = [compute_otsu_criteria(im, th) for th in threshold_range]
-   best_threshold = threshold_range[np.argmin(criterias)]
-   return best_threshold
-
-
-# get the path/directory
-folder_dir = 'D:\Github\OASIS Dataset\input\Mild Dementia'
-
-# iterate over files in
-# that directory
-images = Path(folder_dir).glob('*.jpg')
-for image in images:
-    im = np.array(Image.open(image).convert('L'))
-    im_otsu = threshold_image(im, find_best_threshold(im))
-    name = (str(image).split('\\')[-1])
-    print(type(im))
-    print(type(im_otsu))
-    im_otsu.save(f'D:\Github\OASIS Dataset\prepared_dataset\Mild Dementia\{name}')
-    break
+      cv.imwrite(f"F:\\tech\GitHub\Medical-image-classification\\after_data\{Dname}\{name}",th)
