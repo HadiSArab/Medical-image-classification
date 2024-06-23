@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 
 
-data_dir = "F:\\tech\GitHub\Data\Alzeimer After Preprocessing"
+data_dir = "prepared_dataset\\"
 
 
 categories = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]

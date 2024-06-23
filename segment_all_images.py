@@ -5,7 +5,7 @@ Directories = ["Mild Dementia","Moderate Dementia","Non Demented","Very mild Dem
 for Dname in Directories:
    
    # Find all JPG files in the current directory
-   images = glob.glob(f"F:\\tech\GitHub\Data\input\{Dname}\*.jpg")
+   images = glob.glob(f"input\{Dname}\*.jpg")
    print("\n\n\n\n\n\n\n\n\n Directory : ",Dname)
 
    for image in images:
@@ -21,4 +21,4 @@ for Dname in Directories:
       name = image.split("\\")[-1]
       # print(name)
 
-      cv.imwrite(f"F:\\tech\GitHub\Data\Alzimer after preprocessing\{Dname}\{name}",th)
+      cv.imwrite(f"prepared_dataset\{Dname}\{name}",th)

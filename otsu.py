@@ -62,7 +62,7 @@ def find_best_threshold(im):
    return best_threshold
 
 
-path_image = 'F:\\tech\GitHub\Medical-image-classification\Side-By-Side-Of-Brain-MRI-Scan-Results.webp'
+path_image = 'Side-By-Side-Of-Brain-MRI-Scan-Results.webp'
 im = np.array(Image.open(path_image).convert('L'))
 im_otsu = threshold_image(im, find_best_threshold(im))
 
